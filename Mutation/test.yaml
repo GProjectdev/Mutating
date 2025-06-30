@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test-pod
-  labels: {}  # 여기를 추가!
-spec:
-  containers:
-  - name: pause
-    image: k8s.gcr.io/pause
