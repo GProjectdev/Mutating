@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: image-rewrite-webhook
+webhooks:
+  - name: image.rewrite.webhook.jeongseungjun.dev
+    rules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+    clientConfig:
+      service:
+        name: webhook-service
+        namespace: webhook-system
+        path: /mutate
+        port: 443
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURDekNDQWZPZ0F3SUJBZ0lVQ0M1N25FQzhRNWpxeFZJNmVHUEJTbmtsVzE4d0RRWUpLb1pJaHZjTkFRRUwKQlFBd0ZURVRNQkVHQTFVRUF3d0tkMlZpYUc5dmF5MWpZVEFlRncweU5UQTJNekF4TURRM01UZGFGdzB6TlRBMgpNamd4TURRM01UZGFNQlV4RXpBUkJnTlZCQU1NQ25kbFltaHZiMnN0WTJFd2dnRWlNQTBHQ1NxR1NJYjNEUUVCCkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDcmlTUm1NTkhtb0pEOENLdE9wbGtOcjB5NGNmS0tsTno3VzE1SDZnN3MKWWJCamovNW5xZy9nUmRpb0JkZHp4OGloL2RhNTlGN3g5Ulg4N0tyazFpc1RqL1R2R1h1ak9CbHh4UjdjTHBFVQpMRnRwTkhQaDRMTnNNQVo2dlhyL08rcDVVazRXTUZnSjRwc0tjc3VlU1hzM2ROMUJ4MnVvNE53Z3UxWmVJNzBPCmpGRkR1QzF0SE5HRWd2TE9KcjRHbmhZaVpsQVlnZlByWXAyL1A5OExyRFNzcktLblB0TkpncURQY2NkRW1nelIKK1g4dXRFTnlIMWFGQmdHa21kWTJqemNCYnd4R1k1RU4vQURpVVRQM0lPNjVOVlhCNElxYi9MOFU1MkhkVjNhcAptSXlTa0dGSlgvUHJMSHZUV2UwaXlrWHVobTF2bXMvR3MvN0RyZk5hWnhoTkFnTUJBQUdqVXpCUk1CMEdBMVVkCkRnUVdCQlJnVnZ2UDIzQnVOUTZKQVNLWHEvUmV0WGoxSURBZkJnTlZIU01FR0RBV2dCUmdWdnZQMjNCdU5RNkoKQVNLWHEvUmV0WGoxSURBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFCTAo3Q1Y4N0l6bTRZM09sVWdPSWh2YkgzNzFGc0ZqSkVxb2JISXlXOWk2czVoME5DMWl6UlVjUjlaYWRPeWFBTy91Cm1LVUdtSXkzWlc4ZVlCaTdHaDFhMGZkY29uRGE3MnVGM0lkR2JCT2VFWFhWc1FiK25yUjQrV0ttbHp0SHdTK0IKWEhFcUp3MEdNak1YcmpWd2ljVDhXdjNRU1ZOazJiRGxqVUVQQnE3S2FjS2kyQktVRzBJcThIam5OREZ2WEJXTQp3UVBzNStpL2wyUmVQZW5BZDZuUElmZDJtQlpKZWlMMkpGaU1TbmJ4eEhyRlllNmtnWjF3ank0dUdRcThrdVZ4ClovZ0gxcS93RUlTcyt4bFhlUmFnWWtrVkYramFzNUcvVkJMWE5taDFKakN0ZFlXc0x3QWorQnpad2UvejUyYWYKMnMrWGUzdWJYSFhZNXU3eHdTejMKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo= # 여기에 base64 인코딩한 ca.crt 값을 삽입
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
+    failurePolicy: Fail
