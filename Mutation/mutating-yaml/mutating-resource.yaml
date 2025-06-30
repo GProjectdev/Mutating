@@ -1,0 +1,49 @@
+# webhook-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook
+  namespace: webhook-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook
+  template:
+    metadata:
+      labels:
+        app: webhook
+    spec:
+      containers:
+      - name: webhook
+        image: jeongseungjun/mutatingwebhook:latest  # ✅ 새로 만든 이미지
+        ports:
+        - containerPort: 8443
+        env:
+        - name: TLS_CERT_FILE
+          value: /tls/tls.crt
+        - name: TLS_KEY_FILE
+          value: /tls/tls.key
+        volumeMounts:
+        - name: tls
+          mountPath: /tls
+          readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: webhook-tls
+
+---
+
+# webhook-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webhook
+  namespace: webhook-system
+spec:
+  selector:
+    app: webhook
+  ports:
+  - port: 443
+    targetPort: 8443
