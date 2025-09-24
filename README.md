@@ -34,8 +34,10 @@ cd Mutation/webhook-server
 ```
 3. Docker file 시행(로그인은 따로 해줘야 합니다.)(Build and push the Docker image (requires Docker login))
 ```
-docker build -t <repository_name> .
-docker push <repository_name>
+buildah bud -t <repository-name>\
+  --build-arg TARGETOS=linux --build-arg TARGETARCH=amd64 \
+  -f Dockerfile .
+buildah push <repository-name>
 ```
 ## Webhook 서버 배포(Deploy Webhook Server)
 1. Webhook 서버를 위한 CA 만들기(openssl 이용)(Generate the CA and TLS certificates (using openssl))
